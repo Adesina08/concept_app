@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Concept App",
+    "slug": "concept-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {"supportsTablet": true},
+    "android": {"adaptiveIcon": {"backgroundColor": "#0C1222"}},
+    "web": {"bundler": "metro"}
+  }
+}
