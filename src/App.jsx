@@ -57,9 +57,12 @@ const App = () => (
         <Route path="/admin-dashboard" element={<AdminFeedbackDashboard />} />
         <Route path="/client-submission" element={<ClientConceptSubmission />} />
         <Route path="/concept-refinement-details" element={<ConceptRefinementDetails />} />
+        <Route path="/concept-refinement-details/:conceptId" element={<ConceptRefinementDetails />} />
         <Route path="/feedback-overview-dashboard" element={<FeedbackOverviewDashboard />} />
         <Route path="/final-report-insights" element={<FinalReportInsights />} />
+        <Route path="/final-report-insights/:conceptId" element={<FinalReportInsights />} />
         <Route path="/iteration-history" element={<IterationHistory />} />
+        <Route path="/iteration-history/:conceptId" element={<IterationHistory />} />
         <Route path="/login-signup" element={<LoginSignup />} />
         <Route path="/respondent-login" element={<RespondentLogin />} />
         <Route path="/respondent-dashboard" element={<RespondentDashboard />} />
