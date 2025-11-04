@@ -3,11 +3,19 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 import AdminConceptSetup from './pages/AdminConceptSetup.jsx';
 import AdminFeedbackDashboard from './pages/AdminFeedbackDashboard.jsx';
 import ClientConceptSubmission from './pages/ClientConceptSubmission.jsx';
+import ConceptRefinementDetails from './pages/ConceptRefinementDetails.jsx';
+import FeedbackOverviewDashboard from './pages/FeedbackOverviewDashboard.jsx';
+import FinalReportInsights from './pages/FinalReportInsights.jsx';
+import IterationHistory from './pages/IterationHistory.jsx';
 
 const navItems = [
   { path: '/', label: 'Admin Concept Setup' },
   { path: '/admin-dashboard', label: 'Admin Feedback Dashboard' },
   { path: '/client-submission', label: 'Client Concept Submission' },
+  { path: '/concept-refinement-details', label: 'Concept Refinement Details' },
+  { path: '/feedback-overview-dashboard', label: 'Feedback Overview Dashboard' },
+  { path: '/final-report-insights', label: 'Final Report & Insights' },
+  { path: '/iteration-history', label: 'Iteration History' },
 ];
 
 const App = () => (
@@ -36,6 +44,10 @@ const App = () => (
         <Route path="/" element={<AdminConceptSetup />} />
         <Route path="/admin-dashboard" element={<AdminFeedbackDashboard />} />
         <Route path="/client-submission" element={<ClientConceptSubmission />} />
+        <Route path="/concept-refinement-details" element={<ConceptRefinementDetails />} />
+        <Route path="/feedback-overview-dashboard" element={<FeedbackOverviewDashboard />} />
+        <Route path="/final-report-insights" element={<FinalReportInsights />} />
+        <Route path="/iteration-history" element={<IterationHistory />} />
       </Routes>
     </main>
   </div>
