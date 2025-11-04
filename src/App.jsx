@@ -7,6 +7,11 @@ import ConceptRefinementDetails from './pages/ConceptRefinementDetails.jsx';
 import FeedbackOverviewDashboard from './pages/FeedbackOverviewDashboard.jsx';
 import FinalReportInsights from './pages/FinalReportInsights.jsx';
 import IterationHistory from './pages/IterationHistory.jsx';
+import LoginSignup from './pages/LoginSignup.jsx';
+import RespondentDashboard from './pages/RespondentDashboard.jsx';
+import RespondentFeedbackInterface from './pages/RespondentFeedbackInterface.jsx';
+import RespondentLogin from './pages/RespondentLogin.jsx';
+import UserProfile from './pages/UserProfile.jsx';
 
 const navItems = [
   { path: '/', label: 'Admin Concept Setup' },
@@ -16,6 +21,11 @@ const navItems = [
   { path: '/feedback-overview-dashboard', label: 'Feedback Overview Dashboard' },
   { path: '/final-report-insights', label: 'Final Report & Insights' },
   { path: '/iteration-history', label: 'Iteration History' },
+  { path: '/login-signup', label: 'Login' },
+  { path: '/respondent-login', label: 'Respondent Login' },
+  { path: '/respondent-dashboard', label: 'Respondent Dashboard' },
+  { path: '/respondent-feedback', label: 'Respondent Feedback' },
+  { path: '/user-profile', label: 'User Profile' },
 ];
 
 const App = () => (
@@ -30,7 +40,9 @@ const App = () => (
               to={item.path}
               end={item.path === '/'}
               className={({ isActive }) =>
-                `rounded-full px-3 py-1 transition-colors ${isActive ? 'bg-[#2b4bee] text-white' : 'bg-transparent text-[#929bc9] hover:text-white'}`
+                `rounded-full px-3 py-1 transition-colors ${
+                  isActive ? 'bg-[#2b4bee] text-white' : 'bg-transparent text-[#929bc9] hover:text-white'
+                }`
               }
             >
               {item.label}
@@ -48,6 +60,11 @@ const App = () => (
         <Route path="/feedback-overview-dashboard" element={<FeedbackOverviewDashboard />} />
         <Route path="/final-report-insights" element={<FinalReportInsights />} />
         <Route path="/iteration-history" element={<IterationHistory />} />
+        <Route path="/login-signup" element={<LoginSignup />} />
+        <Route path="/respondent-login" element={<RespondentLogin />} />
+        <Route path="/respondent-dashboard" element={<RespondentDashboard />} />
+        <Route path="/respondent-feedback" element={<RespondentFeedbackInterface />} />
+        <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
     </main>
   </div>
