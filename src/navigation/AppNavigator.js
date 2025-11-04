@@ -1,8 +1,10 @@
 import React from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Feather } from "@expo/vector-icons";
+import { Platform } from "react-native";
 import colors from "@theme/colors";
 import spacing from "@theme/spacing";
 
@@ -17,8 +19,15 @@ import ConceptEvolutionScreen from "@screens/ConceptEvolutionScreen";
 import ConceptFeedbackScreen from "@screens/ConceptFeedbackScreen";
 import ProfileScreen from "@screens/ProfileScreen";
 
-const Stack = createNativeStackNavigator();
-const DashboardStack = createNativeStackNavigator();
+const createCompatibleStackNavigator = () => {
+  if (Platform.OS === "web") {
+    return createStackNavigator();
+  }
+  return createNativeStackNavigator();
+};
+
+const Stack = createCompatibleStackNavigator();
+const DashboardStack = createCompatibleStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const navTheme = {
@@ -32,14 +41,15 @@ const navTheme = {
   }
 };
 
+const commonStackScreenOptions = {
+  headerStyle: { backgroundColor: colors.background },
+  headerTintColor: colors.text,
+  headerTitleStyle: { fontWeight: "600" },
+  headerBackTitleVisible: false
+};
+
 const DashboardNavigator = () => (
-  <DashboardStack.Navigator
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.background },
-      headerTintColor: colors.text,
-      headerTitleStyle: { fontWeight: "600" }
-    }}
-  >
+  <DashboardStack.Navigator screenOptions={commonStackScreenOptions}>
     <DashboardStack.Screen
       name="DashboardOverview"
       component={DashboardOverviewScreen}
@@ -75,6 +85,7 @@ const DashboardNavigator = () => (
 
 const TabNavigator = () => (
   <Tab.Navigator
+    sceneContainerStyle={{ backgroundColor: colors.background }}
     screenOptions={({ route }) => ({
       headerShown: false,
       tabBarStyle: {
@@ -115,15 +126,18 @@ const TabNavigator = () => (
 );
 
 const AppNavigator = () => {
+  const documentTitle = {
+    formatter: (_options, routeName) => {
+      if (!routeName) {
+        return "Concept App";
+      }
+      return `${routeName} | Concept App`;
+    }
+  };
+
   return (
-    <NavigationContainer theme={navTheme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.text,
-          headerTitleStyle: { fontWeight: "600" }
-        }}
-      >
+    <NavigationContainer theme={navTheme} documentTitle={documentTitle}>
+      <Stack.Navigator screenOptions={commonStackScreenOptions}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RespondentLogin" component={RespondentLoginScreen} options={{ title: "Respondent Login" }} />
         <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
