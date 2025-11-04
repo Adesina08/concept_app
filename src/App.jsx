@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import AdminConceptSetup from './pages/AdminConceptSetup.jsx';
 import AdminFeedbackDashboard from './pages/AdminFeedbackDashboard.jsx';
 import ClientConceptSubmission from './pages/ClientConceptSubmission.jsx';
@@ -12,6 +12,31 @@ import RespondentDashboard from './pages/RespondentDashboard.jsx';
 import RespondentFeedbackInterface from './pages/RespondentFeedbackInterface.jsx';
 import RespondentLogin from './pages/RespondentLogin.jsx';
 import UserProfile from './pages/UserProfile.jsx';
+import { useAuth } from './context/AuthContext.jsx';
+
+const ProtectedRoute = ({ children, role }) => {
+  const { isAuthenticated, isHydrated, user } = useAuth();
+
+  if (!isHydrated) {
+    return (
+      <div className="flex w-full justify-center py-10">
+        <p className="text-sm text-[#929bc9]">Loading authentication status...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    const destination = role === 'respondent' ? '/respondent-login' : '/login-signup';
+    return <Navigate to={destination} replace />;
+  }
+
+  if (role && user?.role && user.role !== role) {
+    const fallback = user.role === 'respondent' ? '/respondent-dashboard' : '/admin-dashboard';
+    return <Navigate to={fallback} replace />;
+  }
+
+  return children;
+};
 
 const navItems = [
   { path: '/', label: 'Admin Concept Setup' },
@@ -54,7 +79,14 @@ const App = () => (
     <main className="mx-auto flex max-w-5xl justify-center px-4 py-6">
       <Routes>
         <Route path="/" element={<AdminConceptSetup />} />
-        <Route path="/admin-dashboard" element={<AdminFeedbackDashboard />} />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminFeedbackDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/client-submission" element={<ClientConceptSubmission />} />
         <Route path="/concept-refinement-details" element={<ConceptRefinementDetails />} />
         <Route path="/feedback-overview-dashboard" element={<FeedbackOverviewDashboard />} />
@@ -62,7 +94,14 @@ const App = () => (
         <Route path="/iteration-history" element={<IterationHistory />} />
         <Route path="/login-signup" element={<LoginSignup />} />
         <Route path="/respondent-login" element={<RespondentLogin />} />
-        <Route path="/respondent-dashboard" element={<RespondentDashboard />} />
+        <Route
+          path="/respondent-dashboard"
+          element={
+            <ProtectedRoute role="respondent">
+              <RespondentDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/respondent-feedback" element={<RespondentFeedbackInterface />} />
         <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
